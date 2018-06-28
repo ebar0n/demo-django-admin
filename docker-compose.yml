@@ -1,0 +1,19 @@
+version: "3"
+
+services:
+
+  postgres:
+    image: postgres
+    volumes:
+      - .docker/postgres:/var/lib/postgresql/data
+
+  api:
+    build: .
+    volumes:
+        - ./api:/src/www/api
+    working_dir: /src/www/api
+    command: python manage.py runserver_plus 0.0.0.0:8000
+    depends_on:
+        - postgres
+    ports:
+        - '8000:8000'
