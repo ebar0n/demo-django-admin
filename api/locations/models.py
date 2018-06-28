@@ -14,8 +14,15 @@ class Country(models.Model):
             (APAC, 'APAC'),
         )
     )
-    created_at = models.DateTimeField(auto_now_add=True, editable=False)
-    updated_at = models.DateTimeField(auto_now=True, editable=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['name']
+        verbose_name_plural = 'Countries'
+
+    def __str__(self):
+        return self.name
 
 
 class City(models.Model):
@@ -23,3 +30,10 @@ class City(models.Model):
     country = models.ForeignKey(Country, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
+
+    class Meta:
+        ordering = ['country__name', 'name']
+        verbose_name_plural = 'Cities'
+
+    def __str__(self):
+        return self.name

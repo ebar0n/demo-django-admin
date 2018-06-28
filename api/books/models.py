@@ -10,6 +10,9 @@ class Publisher(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
 
+    def __str__(self):
+        return self.name
+
 
 class Author(models.Model):
     artistic_name = models.CharField(max_length=30)
@@ -20,11 +23,17 @@ class Author(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
 
+    def __str__(self):
+        return self.artistic_name
+
 
 class Tag(models.Model):
     name = models.CharField(max_length=30)
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
+
+    def __str__(self):
+        return self.name
 
 
 class Book(models.Model):
@@ -36,9 +45,14 @@ class Book(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
 
-    @property
+    def __str__(self):
+        return self.title
+
     def is_new(self):
         return self.publication_date.year == timezone.now().date().year
+
+    is_new.boolean = True
+    is_new.admin_order_field = 'publication_date'
 
 
 class Sale(models.Model):
@@ -53,6 +67,9 @@ class Sale(models.Model):
         ordering = ['-created_at']
         verbose_name = 'Book sale'
         verbose_name_plural = 'Book sales'
+
+    def __str__(self):
+        return '{} - {}: {}'.format(self.book, self.user, self.quantity)
 
 
 class BookSold(Sale):
