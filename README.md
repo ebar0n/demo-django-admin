@@ -11,7 +11,7 @@ Execute:
 
 * Run
 
-      docker-compose up
+      docker-compose up api
 
 * Visit
 
